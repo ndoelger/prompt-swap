@@ -6,16 +6,16 @@ import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 export default function Nav() {
-  const isUserLoggedIn = true;
+  const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
-  const [toggleDropdown, setToggleDropdown] = useState(true);
+  const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
-    async function setProviders() {
+    async function setUpProviders() {
       const response = await getProviders();
       setProviders(response);
     }
-    setProviders();
+    setUpProviders();
   }, []);
 
   return (
@@ -27,7 +27,7 @@ export default function Nav() {
 
       {/* Desktop Nav */}
       <div className="sm:flex hidden">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompt" className="black_btn">
               Create Post
@@ -37,7 +37,7 @@ export default function Nav() {
             </button>
             <Link href="/profile">
               <Image
-                src="/assets/images/logo.svg"
+                src={session?.user.image}
                 width={37}
                 height={37}
                 className="rounded-full"></Image>
@@ -50,7 +50,7 @@ export default function Nav() {
                 <buttons
                   type="button"
                   key={providers.name}
-                  onClick={() => signIn(provider.id)}
+                  onClick={() => signIn(providers.id)}
                   className="black_btn">
                   Sign In
                 </buttons>
@@ -60,11 +60,11 @@ export default function Nav() {
       </div>
       {/* Mobile navigations */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Link href="">
               <Image
-                src="/assets/images/logo.svg"
+                src={session?.user.image}
                 width={37}
                 height={37}
                 className="rounded-full"
