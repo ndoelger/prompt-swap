@@ -19,10 +19,10 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className="flex-between w-full mb-16 pt-3">
+    <nav className="flex-between w-full mb-6 pt-3">
       <Link href="/" className="flex gap-2 flex-cent">
         <Image src="/assets/images/logo.svg" width={30} height={30} />
-        <p className="logo_text">Logo</p>
+        <p className="logo_text p-1">Prompt Swap</p>
       </Link>
 
       {/* Desktop Nav */}
@@ -51,7 +51,7 @@ export default function Nav() {
                   type="button"
                   key={providers.name}
                   onClick={() => signIn(providers.id)}
-                  className="black_btn">
+                  className="black_btn cursor-pointer">
                   Sign In
                 </buttons>
               ))}
@@ -107,8 +107,8 @@ export default function Nav() {
                 <buttons
                   type="button"
                   key={providers.name}
-                  onClick={() => signIn(provider.id)}
-                  className="black_btn">
+                  onClick={() => signIn(providers.id)}
+                  className="black_btn cursor-pointer">
                   Sign In
                 </buttons>
               ))}
